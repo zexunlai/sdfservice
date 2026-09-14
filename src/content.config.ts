@@ -1,4 +1,5 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 
 const editorial = z.object({
@@ -24,7 +25,7 @@ const methodologies = defineCollection({
     sector: z.string(), projectType: z.string(), status: z.string(), publicationDate: z.coerce.date().optional(),
     applicableGeography: z.string(), baseline: z.string(), additionality: z.string(), mrv: z.string(),
     leakage: z.string(), permanence: z.string(), creditingPeriod: z.string(), dataRequirements: z.array(z.string()),
-    strengths: z.array(z.string()), limitations: z.array(z.string()), officialSource: z.string().url().optional(),
+    strengths: z.array(z.string()), limitations: z.array(z.string()), officialSource: z.url().optional(),
     lastReviewed: z.coerce.date().optional(), draft: z.boolean().default(false), image: z.string().optional()
   })
 });
