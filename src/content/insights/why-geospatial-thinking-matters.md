@@ -1,11 +1,12 @@
 ---
 title: Why Geospatial Thinking Matters for Sustainability
 description: Environmental challenges become clearer when we ask where they occur, what surrounds them and how patterns connect across scales.
-category: Geospatial Intelligence
+area: Geospatial Intelligence
+publicationDate: 2026-09-14
 tags: [GIS, spatial thinking, sustainability]
 featured: true
 draft: false
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 
 Sustainability questions are often expressed as totals: total emissions, total water use, total area restored. Totals are useful, but they remove the geography that explains how an environmental outcome is produced and who experiences it.

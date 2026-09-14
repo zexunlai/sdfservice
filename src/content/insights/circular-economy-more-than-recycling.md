@@ -1,11 +1,12 @@
 ---
 title: Circular Economy Is More Than Recycling
 description: Circularity considers how value is preserved across a system, from design and use to reuse, repair and material recovery.
-category: Circular Economy
+area: Circular Economy
+publicationDate: 2026-09-14
 tags: [circular economy, materials, systems thinking]
 featured: true
 draft: false
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 
 Recycling is visible and familiar, so it often becomes shorthand for the circular economy. Yet recycling acts late in a product or material life cycle. Circularity begins earlier, with decisions about design, materials, business models, use and recovery.

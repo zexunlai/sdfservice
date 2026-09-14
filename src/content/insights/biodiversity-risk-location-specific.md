@@ -1,11 +1,12 @@
 ---
 title: Why Biodiversity Risk Is Location-Specific
 description: Biodiversity depends on ecological context, so nature-related assessment must retain the particularity of place.
-category: Biodiversity & Nature
+area: Biodiversity & Nature
+publicationDate: 2026-09-14
 tags: [biodiversity, nature risk, spatial analysis]
 featured: true
 draft: false
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 
 Biodiversity is not distributed evenly. Species, habitats, ecological functions and pressures vary across landscapes and through time. This makes location central to understanding nature-related dependencies, impacts and risks.

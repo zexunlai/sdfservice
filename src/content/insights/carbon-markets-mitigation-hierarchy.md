@@ -1,11 +1,12 @@
 ---
 title: Carbon Markets and the Mitigation Hierarchy
 description: Carbon credits should be understood within a wider sequence of avoiding, reducing and addressing emissions.
-category: Carbon Markets & Methodologies
+area: Carbon Markets & Methodologies
+publicationDate: 2026-09-14
 tags: [carbon markets, mitigation hierarchy, climate strategy]
 featured: false
 draft: false
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 
 Carbon-market instruments are one part of climate action. The mitigation hierarchy provides a useful way to place them within a broader strategy.

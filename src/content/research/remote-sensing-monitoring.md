@@ -5,6 +5,6 @@ category: Currently Exploring
 tags: [remote sensing, monitoring]
 featured: true
 draft: false
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 This is an active research direction focused on public data and methods.

@@ -5,6 +5,6 @@ category: Currently Exploring
 tags: [Article 6, carbon markets]
 featured: true
 draft: false
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 This is an active learning direction, not a statement of completed findings.

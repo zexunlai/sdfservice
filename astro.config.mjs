@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://zexunlai.com',
+  site: 'https://zexunlai-website.pages.dev',
   output: 'static',
   integrations: [sitemap({ filter: (page) => !page.includes('/draft/') })],
   markdown: { shikiConfig: { theme: 'github-light' } }

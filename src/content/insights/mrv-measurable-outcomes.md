@@ -1,11 +1,12 @@
 ---
 title: MRV and the Discipline of Measurable Outcomes
 description: Measurement, reporting and verification form the evidence chain between a project activity and a quantified environmental claim.
-category: Carbon Markets & Methodologies
+area: Carbon Markets & Methodologies
+publicationDate: 2026-09-14
 tags: [MRV, carbon markets, environmental data]
 featured: false
 draft: false
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 
 Measurement, reporting and verification—often shortened to MRV—describe connected but distinct functions in an environmental claim.

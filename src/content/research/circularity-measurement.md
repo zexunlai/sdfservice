@@ -5,6 +5,6 @@ category: Currently Exploring
 tags: [circular economy, measurement]
 featured: true
 draft: false
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 This is an active research interest and does not represent a completed assessment framework.

@@ -5,6 +5,6 @@ category: Currently Exploring
 tags: [carbon methodologies, integrity]
 featured: true
 draft: false
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 This is an active research interest based on public standards, methodologies and literature.

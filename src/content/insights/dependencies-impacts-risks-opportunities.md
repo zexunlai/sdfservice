@@ -1,11 +1,12 @@
 ---
 title: Dependencies, Impacts, Risks and Opportunities
 description: Four related concepts offer a practical sequence for structuring nature-related analysis without collapsing distinct questions.
-category: Biodiversity & Nature
+area: Biodiversity & Nature
+publicationDate: 2026-09-14
 tags: [nature, risk, frameworks]
 featured: false
 draft: false
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 
 Nature-related discussions often move quickly between dependencies, impacts, risks and opportunities. Keeping the concepts distinct makes analysis clearer.

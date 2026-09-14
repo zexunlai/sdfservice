@@ -1,11 +1,12 @@
 ---
 title: Why Circularity Needs Measurement
 description: Clear indicators help distinguish circular activity from environmental improvement and make system boundaries visible.
-category: Circular Economy
+area: Circular Economy
+publicationDate: 2026-09-14
 tags: [circularity, measurement, indicators]
 featured: false
 draft: false
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 
 Circular economy strategies are easy to describe in positive terms. Measurement tests whether an intervention changes material use, product life, waste or environmental outcomes in the way intended.

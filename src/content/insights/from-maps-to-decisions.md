@@ -1,11 +1,12 @@
 ---
 title: From Maps to Decisions
 description: A useful environmental map connects a clear question, appropriate evidence and a decision someone can actually make.
-category: Geospatial Intelligence
+area: Geospatial Intelligence
+publicationDate: 2026-09-14
 tags: [GIS, decision-making, environmental data]
 featured: false
 draft: false
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 
 A map can make complex data feel immediately understandable. That apparent clarity is powerful, but it can also conceal uncertain inputs, arbitrary categories and unresolved choices.

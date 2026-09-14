@@ -1,11 +1,12 @@
 ---
 title: Understanding Additionality in Carbon Crediting
 description: Additionality asks whether the credited outcome depends on the incentive created by the carbon-crediting mechanism.
-category: Carbon Markets & Methodologies
+area: Carbon Markets & Methodologies
+publicationDate: 2026-09-14
 tags: [additionality, carbon credits, baselines]
 featured: false
 draft: false
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 
 Additionality addresses a counterfactual question: would the emission reduction or removal have occurred without the carbon-crediting incentive?

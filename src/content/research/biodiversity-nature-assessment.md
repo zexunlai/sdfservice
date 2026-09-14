@@ -5,6 +5,6 @@ category: Currently Exploring
 tags: [biodiversity, nature]
 featured: true
 draft: false
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 This is an active research interest based on public frameworks and ecological information.

@@ -1,10 +1,11 @@
 ---
 title: Remote Sensing for Carbon MRV
 description: Draft placeholder for a future public explainer.
-category: Geospatial Intelligence
+area: Geospatial Intelligence
+publicationDate: 2026-09-14
 tags: [remote sensing, MRV]
 featured: false
 draft: true
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 Draft — not for publication.

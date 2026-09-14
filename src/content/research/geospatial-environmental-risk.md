@@ -5,6 +5,6 @@ category: Currently Exploring
 tags: [GIS, environmental risk]
 featured: true
 draft: false
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 This is an active research interest focused on public data and transparent analytical approaches.

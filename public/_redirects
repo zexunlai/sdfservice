@@ -1,4 +1,7 @@
-/research /about#research 301
-/research/ /about#research 301
-/projects /about#projects 301
-/projects/ /about#projects 301
+/research /about 301
+/research/ /about 301
+/projects /about 301
+/projects/ /about 301
+/methodologies /library 301
+/methodologies/ /library 301
+/methodologies/:splat /library/:splat 301

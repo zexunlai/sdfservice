@@ -5,6 +5,6 @@ category: Currently Exploring
 tags: [data, decision-making]
 featured: true
 draft: false
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 This is an active research interest rather than a completed body of work.

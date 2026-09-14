@@ -1,11 +1,12 @@
 ---
 title: Carbon Credits Begin with Methodologies
 description: Methodologies define the rules that connect a project activity, a counterfactual baseline, monitoring evidence and claimed emission outcomes.
-category: Carbon Markets & Methodologies
+area: Carbon Markets & Methodologies
+publicationDate: 2026-09-14
 tags: [carbon markets, methodologies, integrity]
 featured: false
 draft: false
-author: Zexun Lai
+author: Ze-Xun Lai
 ---
 
 A carbon credit is often discussed as a unit. Before that unit can be issued, a methodology must translate a project activity into a quantified claim.

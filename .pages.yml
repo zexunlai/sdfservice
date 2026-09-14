@@ -3,121 +3,115 @@ media:
   output: /images
 
 content:
-  - name: insights
-    label: Insights
+  - name: articles
+    label: Articles
     type: collection
     path: src/content/insights
     format: yaml-frontmatter
-    filename:
-      template: "{primary}.md"
-      field: create
-    view:
-      primary: title
-      fields: [title, category, draft, updated]
-      sort: [title, category, updated]
-      search: [title, description, category, tags]
-    fields:
-      - { name: title, label: Title, type: string, required: true }
-      - { name: description, label: Description, type: text, required: true }
-      - { name: date, label: Publication date, type: date }
-      - { name: updated, label: Updated, type: date }
-      - { name: category, label: Category, type: string, required: true }
-      - name: tags
-        label: Tags
-        type: string
-        list: true
-      - { name: featured, label: Featured, type: boolean }
-      - { name: draft, label: Draft, type: boolean, required: true }
-      - { name: author, label: Author, type: string, required: true }
-      - { name: image, label: Image, type: image }
-      - name: body
-        label: Article
-        type: rich-text
-        options: { format: markdown, media: true, path: public/images/insights, rename: true }
-
-  - name: methodologies
-    label: Methodologies
-    type: collection
-    path: src/content/methodologies
-    format: yaml-frontmatter
     filename: { template: "{primary}.md", field: create }
     view:
       primary: title
-      fields: [title, methodologyId, registry, status, draft]
-      search: [title, methodologyId, registry, sector, projectType]
+      fields: [title, area, publicationDate, draft]
+      sort: [publicationDate, title]
+      search: [title, description, area, subtopic, tags]
+      default: { sort: publicationDate, order: desc }
     fields:
       - { name: title, label: Title, type: string, required: true }
       - { name: description, label: Description, type: text, required: true }
-      - { name: methodologyId, label: Methodology ID, type: string, required: true }
-      - { name: registry, label: Registry, type: string, required: true }
-      - { name: version, label: Version, type: string, required: true }
-      - { name: sector, label: Sector, type: string, required: true }
-      - { name: projectType, label: Project type, type: string, required: true }
-      - { name: status, label: Status, type: string, required: true }
-      - { name: publicationDate, label: Publication date, type: date }
-      - { name: applicableGeography, label: Applicable geography, type: text, required: true }
-      - { name: baseline, label: Baseline, type: text, required: true }
-      - { name: additionality, label: Additionality, type: text, required: true }
-      - { name: mrv, label: MRV, type: text, required: true }
-      - { name: leakage, label: Leakage, type: text, required: true }
-      - { name: permanence, label: Permanence, type: text, required: true }
-      - { name: creditingPeriod, label: Crediting period, type: text, required: true }
-      - { name: dataRequirements, label: Data requirements, type: string, list: true }
-      - { name: strengths, label: Strengths, type: string, list: true }
-      - { name: limitations, label: Limitations, type: string, list: true }
-      - { name: officialSource, label: Official source, type: string }
-      - { name: lastReviewed, label: Last reviewed, type: date }
-      - { name: draft, label: Draft, type: boolean, required: true }
-      - { name: image, label: Image, type: image }
-      - name: body
-        label: Notes
-        type: rich-text
-        options: { format: markdown, media: true, path: public/images/methodologies, rename: true }
-
-  - name: research
-    label: Research
-    type: collection
-    path: src/content/research
-    format: yaml-frontmatter
-    filename: { template: "{primary}.md", field: create }
-    view:
-      primary: title
-      fields: [title, category, draft]
-      search: [title, description, tags]
-    fields:
-      - { name: title, label: Title, type: string, required: true }
-      - { name: description, label: Description, type: text, required: true }
-      - { name: date, label: Date, type: date }
-      - { name: updated, label: Updated, type: date }
-      - { name: category, label: Category, type: string, required: true }
+      - { name: publicationDate, label: Publication date, type: date, required: true }
+      - { name: updatedDate, label: Updated date, type: date }
+      - name: area
+        label: Expertise area
+        type: select
+        required: true
+        options:
+          values: [Sustainability & Climate Change, Geospatial Intelligence, Biodiversity & Nature, Circular Economy, Carbon Markets & Methodologies]
+      - { name: subtopic, label: Subtopic, type: string }
       - { name: tags, label: Tags, type: string, list: true }
       - { name: featured, label: Featured, type: boolean }
       - { name: draft, label: Draft, type: boolean, required: true }
       - { name: author, label: Author, type: string, required: true }
       - { name: image, label: Image, type: image }
-      - { name: body, label: Research notes, type: rich-text, options: { format: markdown, media: true, path: public/images/research, rename: true } }
+      - { name: body, label: Article, type: rich-text, options: { format: markdown, media: true, path: public/images/insights, rename: true } }
+
+  - name: library
+    label: Library
+    type: collection
+    path: src/content/library
+    format: yaml-frontmatter
+    filename: { template: "{primary}.md", field: create }
+    view:
+      primary: title
+      fields: [title, area, entryType, lastReviewed, draft]
+      search: [title, summary, area, entryType, organisation, identifier]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - name: area
+        label: Expertise area
+        type: select
+        required: true
+        options:
+          values: [Sustainability & Climate Change, Geospatial Intelligence, Biodiversity & Nature, Circular Economy, Carbon Markets & Methodologies]
+      - name: entryType
+        label: Entry type
+        type: select
+        required: true
+        options:
+          values: [Methodology, Framework, Standard, Analytical Method, Guidance, Tool]
+      - { name: organisation, label: Organisation, type: string }
+      - { name: identifier, label: Identifier, type: string }
+      - { name: version, label: Version, type: string }
+      - { name: publicationDate, label: Publication date, type: date }
+      - { name: lastReviewed, label: Last reviewed, type: date, required: true }
+      - { name: summary, label: Summary, type: text, required: true }
+      - { name: applicability, label: Applicability, type: text, required: true }
+      - { name: keyConcepts, label: Key concepts, type: string, list: true }
+      - { name: keyRequirements, label: Key requirements, type: string, list: true }
+      - { name: strengths, label: Strengths, type: string, list: true }
+      - { name: limitations, label: Limitations, type: string, list: true }
+      - { name: officialSource, label: Official source, type: string }
+      - { name: relatedArticles, label: Related articles, type: string, list: true }
+      - { name: baseline, label: Baseline, type: text }
+      - { name: additionality, label: Additionality, type: text }
+      - { name: mrv, label: MRV, type: text }
+      - { name: leakage, label: Leakage, type: text }
+      - { name: permanence, label: Permanence, type: text }
+      - { name: creditingPeriod, label: Crediting period, type: text }
+      - { name: validation, label: Validation, type: text }
+      - { name: verification, label: Verification, type: text }
+      - { name: draft, label: Draft, type: boolean, required: true }
+      - { name: body, label: Entry content, type: rich-text, options: { format: markdown, media: true, path: public/images/library, rename: true } }
+
+  - name: research
+    label: Research archive
+    type: collection
+    path: src/content/research
+    format: yaml-frontmatter
+    filename: { template: "{primary}.md", field: create }
+    fields:
+      - { name: title, type: string, required: true }
+      - { name: description, type: text, required: true }
+      - { name: category, type: string, required: true }
+      - { name: tags, type: string, list: true }
+      - { name: featured, type: boolean }
+      - { name: draft, type: boolean, required: true }
+      - { name: author, type: string, required: true }
+      - { name: body, type: rich-text, options: { format: markdown } }
 
   - name: projects
-    label: Projects
+    label: Projects archive
     type: collection
     path: src/content/projects
     format: yaml-frontmatter
     exclude: [.gitkeep]
     filename: { template: "{primary}.md", field: create }
-    view:
-      primary: title
-      fields: [title, category, status, draft]
-      search: [title, description, category, tags]
     fields:
-      - { name: title, label: Title, type: string, required: true }
-      - { name: description, label: Description, type: text, required: true }
-      - { name: date, label: Date, type: date }
-      - { name: updated, label: Updated, type: date }
-      - { name: category, label: Category, type: string, required: true }
-      - { name: status, label: Status, type: string, required: true }
-      - { name: tags, label: Tags, type: string, list: true }
-      - { name: featured, label: Featured, type: boolean }
-      - { name: draft, label: Draft, type: boolean, required: true }
-      - { name: author, label: Author, type: string, required: true }
-      - { name: image, label: Image, type: image }
-      - { name: body, label: Project notes, type: rich-text, options: { format: markdown, media: true, path: public/images/projects, rename: true } }
+      - { name: title, type: string, required: true }
+      - { name: description, type: text, required: true }
+      - { name: category, type: string, required: true }
+      - { name: status, type: string, required: true }
+      - { name: tags, type: string, list: true }
+      - { name: featured, type: boolean }
+      - { name: draft, type: boolean, required: true }
+      - { name: author, type: string, required: true }
+      - { name: body, type: rich-text, options: { format: markdown } }
