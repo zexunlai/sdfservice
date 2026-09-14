@@ -1,0 +1,15 @@
+---
+const links = [['Expertise','/expertise/'],['Insights','/insights/'],['Methodologies','/methodologies/'],['Research','/research/'],['Projects','/projects/'],['About','/about/']];
+---
+<header class="site-header">
+  <a class="brand" href="/" aria-label="Zexun Lai home"><span>ZL</span><strong>Zexun Lai</strong></a>
+  <button class="menu" aria-expanded="false" aria-controls="nav">Menu</button>
+  <nav id="nav" aria-label="Primary">{links.map(([label,href]) => <a href={href}>{label}</a>)}<a href="/contact/">Contact ↗</a></nav>
+</header>
+<script>const b=document.querySelector('.menu');const n=document.querySelector('#nav');b?.addEventListener('click',()=>{const x=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!x));n?.classList.toggle('open',!x)});</script>
+<style>
+.site-header{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 max(20px,calc((100vw - 1180px)/2));border-bottom:1px solid var(--line);position:relative;z-index:20;background:rgba(246,243,236,.92);backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}.brand span{display:grid;place-items:center;width:34px;height:34px;background:var(--forest);color:white;font-family:var(--serif)}.brand strong{font-size:.92rem}
+nav{display:flex;align-items:center;gap:22px}nav a{font-size:.78rem;text-decoration:none;color:var(--muted)}nav a:hover{color:var(--ink)}.menu{display:none;border:0;background:none;font:inherit}
+@media(max-width:850px){.menu{display:block}nav{display:none;position:absolute;top:72px;left:0;right:0;background:var(--paper);padding:20px;flex-direction:column;align-items:flex-start;border-bottom:1px solid var(--line)}nav.open{display:flex}}
+</style>

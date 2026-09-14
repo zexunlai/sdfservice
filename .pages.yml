@@ -1,0 +1,123 @@
+media:
+  input: public/images
+  output: /images
+
+content:
+  - name: insights
+    label: Insights
+    type: collection
+    path: src/content/insights
+    format: yaml-frontmatter
+    filename:
+      template: "{primary}.md"
+      field: create
+    view:
+      primary: title
+      fields: [title, category, draft, updated]
+      sort: [title, category, updated]
+      search: [title, description, category, tags]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: description, label: Description, type: text, required: true }
+      - { name: date, label: Publication date, type: date }
+      - { name: updated, label: Updated, type: date }
+      - { name: category, label: Category, type: string, required: true }
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      - { name: featured, label: Featured, type: boolean }
+      - { name: draft, label: Draft, type: boolean, required: true }
+      - { name: author, label: Author, type: string, required: true }
+      - { name: image, label: Image, type: image }
+      - name: body
+        label: Article
+        type: rich-text
+        options: { format: markdown, media: true, path: public/images/insights, rename: true }
+
+  - name: methodologies
+    label: Methodologies
+    type: collection
+    path: src/content/methodologies
+    format: yaml-frontmatter
+    filename: { template: "{primary}.md", field: create }
+    view:
+      primary: title
+      fields: [title, methodologyId, registry, status, draft]
+      search: [title, methodologyId, registry, sector, projectType]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: description, label: Description, type: text, required: true }
+      - { name: methodologyId, label: Methodology ID, type: string, required: true }
+      - { name: registry, label: Registry, type: string, required: true }
+      - { name: version, label: Version, type: string, required: true }
+      - { name: sector, label: Sector, type: string, required: true }
+      - { name: projectType, label: Project type, type: string, required: true }
+      - { name: status, label: Status, type: string, required: true }
+      - { name: publicationDate, label: Publication date, type: date }
+      - { name: applicableGeography, label: Applicable geography, type: text, required: true }
+      - { name: baseline, label: Baseline, type: text, required: true }
+      - { name: additionality, label: Additionality, type: text, required: true }
+      - { name: mrv, label: MRV, type: text, required: true }
+      - { name: leakage, label: Leakage, type: text, required: true }
+      - { name: permanence, label: Permanence, type: text, required: true }
+      - { name: creditingPeriod, label: Crediting period, type: text, required: true }
+      - { name: dataRequirements, label: Data requirements, type: string, list: true }
+      - { name: strengths, label: Strengths, type: string, list: true }
+      - { name: limitations, label: Limitations, type: string, list: true }
+      - { name: officialSource, label: Official source, type: string }
+      - { name: lastReviewed, label: Last reviewed, type: date }
+      - { name: draft, label: Draft, type: boolean, required: true }
+      - { name: image, label: Image, type: image }
+      - name: body
+        label: Notes
+        type: rich-text
+        options: { format: markdown, media: true, path: public/images/methodologies, rename: true }
+
+  - name: research
+    label: Research
+    type: collection
+    path: src/content/research
+    format: yaml-frontmatter
+    filename: { template: "{primary}.md", field: create }
+    view:
+      primary: title
+      fields: [title, category, draft]
+      search: [title, description, tags]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: description, label: Description, type: text, required: true }
+      - { name: date, label: Date, type: date }
+      - { name: updated, label: Updated, type: date }
+      - { name: category, label: Category, type: string, required: true }
+      - { name: tags, label: Tags, type: string, list: true }
+      - { name: featured, label: Featured, type: boolean }
+      - { name: draft, label: Draft, type: boolean, required: true }
+      - { name: author, label: Author, type: string, required: true }
+      - { name: image, label: Image, type: image }
+      - { name: body, label: Research notes, type: rich-text, options: { format: markdown, media: true, path: public/images/research, rename: true } }
+
+  - name: projects
+    label: Projects
+    type: collection
+    path: src/content/projects
+    format: yaml-frontmatter
+    exclude: [.gitkeep]
+    filename: { template: "{primary}.md", field: create }
+    view:
+      primary: title
+      fields: [title, category, status, draft]
+      search: [title, description, category, tags]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: description, label: Description, type: text, required: true }
+      - { name: date, label: Date, type: date }
+      - { name: updated, label: Updated, type: date }
+      - { name: category, label: Category, type: string, required: true }
+      - { name: status, label: Status, type: string, required: true }
+      - { name: tags, label: Tags, type: string, list: true }
+      - { name: featured, label: Featured, type: boolean }
+      - { name: draft, label: Draft, type: boolean, required: true }
+      - { name: author, label: Author, type: string, required: true }
+      - { name: image, label: Image, type: image }
+      - { name: body, label: Project notes, type: rich-text, options: { format: markdown, media: true, path: public/images/projects, rename: true } }
