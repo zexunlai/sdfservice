@@ -87,6 +87,9 @@ importers:
       typescript:
         specifier: ^6.0.0
         version: 6.0.3
+      wrangler:
+        specifier: 4.131.1
+        version: 4.131.1(@types/node@24.13.4)
 
 packages:
 
