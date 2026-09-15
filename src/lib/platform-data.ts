@@ -25,11 +25,12 @@ export async function getPublishedArticles(locals: App.Locals, locale: Locale = 
   }
   const { data, error } = await db.from('articles').select('id,slug,source_language,subtopic,author,publication_date,updated_date,tags,featured,expertise_areas!inner(key,display_name),article_translations(locale,title,subtitle,summary,body_html,seo_title,seo_description,translation_status,translation_provider,translator_name,translation_credit_public,attribution_required,is_published)').eq('status','published').order('publication_date',{ascending:false});
   if (error) throw error;
-  return (data ?? []).map((row: any): PublicArticle => {
+  return (data ?? []).map((row: any): PublicArticle | null => {
     const translations = row.article_translations ?? [];
     const translation = translations.find((item: any) => item.locale === locale) ?? translations.find((item: any) => item.locale === row.source_language) ?? translations[0];const contentLocale=(translation?.locale??row.source_language) as Locale;
-    return { id: row.id, slug: row.slug, areaKey: row.expertise_areas.key, area: row.expertise_areas.display_name, subtopic: row.subtopic, author: row.author, publicationDate: row.publication_date, updatedDate: row.updated_date, tags: row.tags, featured: row.featured, title: translation?.title, subtitle: translation?.subtitle, summary: translation?.summary, bodyHtml: translation?.body_html ?? '', source: 'supabase' as const,requestedLocale:locale,contentLocale,sourceLanguage:row.source_language,fallback:contentLocale!==locale,translationStatus:translation?.translation_status,translationProvider:translation?.translation_provider,translatorName:translation?.translator_name,translationCreditPublic:translation?.translation_credit_public,attributionRequired:translation?.attribution_required };
-  });
+    if (!row.slug || !row.expertise_areas?.key || !row.publication_date || !translation?.title) return null;
+    return { id: row.id, slug: row.slug, areaKey: row.expertise_areas.key, area: row.expertise_areas.display_name ?? row.expertise_areas.key, subtopic: row.subtopic, author: row.author ?? 'Ze-Xun Lai', publicationDate: row.publication_date, updatedDate: row.updated_date, tags: Array.isArray(row.tags) ? row.tags : [], featured: row.featured === true, title: translation.title, subtitle: translation.subtitle ?? null, summary: translation.summary ?? '', bodyHtml: translation.body_html ?? '', source: 'supabase' as const,requestedLocale:locale,contentLocale,sourceLanguage: row.source_language as Locale, fallback:contentLocale!==locale,translationStatus:translation?.translation_status,translationProvider:translation?.translation_provider,translatorName:translation?.translator_name,translationCreditPublic:translation?.translation_credit_public,attributionRequired:translation?.attribution_required };
+  }).filter((article): article is PublicArticle => article !== null);
 }
 
 export async function getArticleBySlug(locals: App.Locals, slug: string, locale: Locale = 'en') {
