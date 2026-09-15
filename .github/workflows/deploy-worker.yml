@@ -26,13 +26,20 @@ jobs:
       - run: pnpm test
       - run: pnpm build
       - name: Verify build output
-        run: test -d dist && test -n "$(find dist -mindepth 1 -print -quit)"
+        run: |
+          test -d dist
+          test -n "$(find dist -mindepth 1 -print -quit)"
+          echo '--- CI dist tree ---'
+          find dist -maxdepth 3 -type f | sort
+          echo '--- CI runtime markers ---'
+          find dist -type f \( -name '_worker.js' -o -name '_routes.json' -o -name '*manifest*' \) -print | sort
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: astro-dist
           path: dist
           if-no-files-found: error
+          include-hidden-files: true
 
   deploy:
     needs: ci
@@ -57,6 +64,10 @@ jobs:
           ls -la
           ls -la dist
           test -n "$(find dist -mindepth 1 -print -quit)"
+          echo '--- downloaded dist tree ---'
+          find dist -maxdepth 3 -type f | sort
+          echo '--- downloaded runtime markers ---'
+          find dist -type f \( -name '_worker.js' -o -name '_routes.json' -o -name '*manifest*' \) -print | sort
       - uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
