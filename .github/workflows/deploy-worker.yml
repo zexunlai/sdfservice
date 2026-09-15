@@ -25,12 +25,25 @@ jobs:
       - run: pnpm lint
       - run: pnpm test
       - run: pnpm build
+      - name: Verify build output
+        run: test -d dist && test -n "$(find dist -mindepth 1 -print -quit)"
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: astro-dist
+          path: dist
+          if-no-files-found: error
 
   deploy:
     needs: ci
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: astro-dist
+          path: dist
       - uses: pnpm/action-setup@v4
         with:
           version: 10
@@ -38,8 +51,14 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
+      - name: Verify downloaded build output
+        run: |
+          pwd
+          ls -la
+          ls -la dist
+          test -n "$(find dist -mindepth 1 -print -quit)"
       - uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name zexunlai-website --branch main
+          command: pages deploy dist --project-name zexunlai-website --branch main --commit-dirty=true
