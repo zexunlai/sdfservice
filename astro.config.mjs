@@ -1,9 +1,10 @@
 import { defineConfig } from 'astro/config';
-import sitemap from '@astrojs/sitemap';
+import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
   site: 'https://zexunlai-website.pages.dev',
-  output: 'static',
-  integrations: [sitemap({ filter: (page) => !page.includes('/draft/') })],
+  output: 'server',
+  session: false,
+  adapter: cloudflare({ imageService: 'compile' }),
   markdown: { shikiConfig: { theme: 'github-light' } }
 });

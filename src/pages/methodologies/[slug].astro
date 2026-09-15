@@ -1,10 +1,4 @@
 ---
-import { getCollection } from 'astro:content';
-
-export async function getStaticPaths() {
-  const entries = await getCollection('library', ({ data }) => !data.draft);
-  return entries.map((entry) => ({ params: { slug: entry.id } }));
-}
-
+export const prerender = false;
 return Astro.redirect(`/library/${Astro.params.slug}/`,301);
 ---

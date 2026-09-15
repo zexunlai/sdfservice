@@ -1,0 +1,23 @@
+---
+interface Props { name: string; value?: string; label?: string; }
+const { name, value = '', label = 'Content' } = Astro.props;
+---
+<div class="field full rich-editor" data-editor>
+  <span>{label}</span>
+  <div class="editor-toolbar" aria-label="Formatting toolbar">
+    <button type="button" data-command="h2">H2</button><button type="button" data-command="h3">H3</button>
+    <button type="button" data-command="bold"><strong>B</strong></button><button type="button" data-command="italic"><em>I</em></button>
+    <button type="button" data-command="bullet">List</button><button type="button" data-command="ordered">1. List</button>
+    <button type="button" data-command="quote">Quote</button><button type="button" data-command="link">Link</button>
+    <button type="button" data-command="rule">Divider</button><button type="button" data-command="image">Image</button>
+    <button type="button" data-command="table">Table</button><button type="button" data-command="sup">x²</button>
+    <button type="button" data-command="sub">x₂</button><button type="button" data-command="code">Code</button>
+    <button type="button" data-command="undo">Undo</button><button type="button" data-command="redo">Redo</button>
+  </div>
+  <div class="editor-surface" data-editor-surface></div>
+  <input type="hidden" name={name} value={value} data-editor-value>
+</div>
+<script>
+  import { Editor } from '@tiptap/core'; import StarterKit from '@tiptap/starter-kit'; import Image from '@tiptap/extension-image'; import Link from '@tiptap/extension-link'; import { Table, TableRow, TableHeader, TableCell } from '@tiptap/extension-table'; import Superscript from '@tiptap/extension-superscript'; import Subscript from '@tiptap/extension-subscript';
+  document.querySelectorAll<HTMLElement>('[data-editor]').forEach(root=>{const hidden=root.querySelector<HTMLInputElement>('[data-editor-value]')!;let initial:any='<p></p>';try{if(hidden.value)initial=JSON.parse(hidden.value)}catch{initial=hidden.value||'<p></p>'}const editor=new Editor({element:root.querySelector('[data-editor-surface]')!,extensions:[StarterKit.configure({link:false}),Image,Link.configure({openOnClick:false}),Table.configure({resizable:true}),TableRow,TableHeader,TableCell,Superscript,Subscript],content:initial,onUpdate:({editor})=>{hidden.value=JSON.stringify(editor.getJSON())}});root.querySelectorAll<HTMLButtonElement>('[data-command]').forEach(btn=>btn.addEventListener('click',()=>{const c=btn.dataset.command;const chain=editor.chain().focus();if(c==='h2')chain.toggleHeading({level:2}).run();if(c==='h3')chain.toggleHeading({level:3}).run();if(c==='bold')chain.toggleBold().run();if(c==='italic')chain.toggleItalic().run();if(c==='bullet')chain.toggleBulletList().run();if(c==='ordered')chain.toggleOrderedList().run();if(c==='quote')chain.toggleBlockquote().run();if(c==='rule')chain.setHorizontalRule().run();if(c==='code')chain.toggleCode().run();if(c==='sup')chain.toggleSuperscript().run();if(c==='sub')chain.toggleSubscript().run();if(c==='undo')chain.undo().run();if(c==='redo')chain.redo().run();if(c==='table')chain.insertTable({rows:3,cols:3,withHeaderRow:true}).run();if(c==='link'){const href=window.prompt('Link URL');if(href)chain.setLink({href}).run()}if(c==='image'){const src=window.prompt('Image URL from Media Library');if(src)chain.setImage({src,alt:''}).run()}}));});
+</script>

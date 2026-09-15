@@ -1,5 +1,5 @@
 ---
-import {getCollection,render} from 'astro:content'; import ArticleLayout from '../../layouts/ArticleLayout.astro';
-export async function getStaticPaths(){const e=await getCollection('insights',({data})=>!data.draft);return e.map(x=>({params:{slug:x.id},props:{entry:x}}))} const {entry}=Astro.props; const {Content}=await render(entry);
+import {getEntry,render} from 'astro:content';import ArticleLayout from '../../layouts/ArticleLayout.astro';import GlossaryContent from '../../components/GlossaryContent.astro';import {getArticleBySlug,getPublicGlossaryDefinitions} from '../../lib/platform-data';
+export const prerender=false;const slug=Astro.params.slug!;const article=await getArticleBySlug(Astro.locals,slug,'en');const definitions=article?.source==='supabase'?await getPublicGlossaryDefinitions(Astro.locals,article.contentLocale):[];let Content:any=null;if(article?.source==='markdown'){const entry=await getEntry('insights',slug);if(entry)({Content}=await render(entry));}if(!article)Astro.response.status=404;
 ---
-<ArticleLayout {...entry.data}><Content/></ArticleLayout>
+{article?<ArticleLayout {...article} description={article.summary} publicationDate={new Date(`${article.publicationDate}T00:00:00`)} updatedDate={article.updatedDate?new Date(`${article.updatedDate}T00:00:00`):undefined}>{Content?<Content/>:<GlossaryContent html={article.bodyHtml} definitions={definitions}/>}</ArticleLayout>:<p>Article not found.</p>}
