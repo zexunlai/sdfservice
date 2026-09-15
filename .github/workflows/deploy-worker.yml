@@ -59,6 +59,8 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - name: Build Worker bundle
+        run: pnpm build
       - name: Verify Wrangler CLI
         run: pnpm exec wrangler --version
       - name: Verify Astro Worker entrypoint
