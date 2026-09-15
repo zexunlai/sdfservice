@@ -13,7 +13,7 @@ This document records completed owner setup and the remaining external deploymen
 - **DONE — Content migration:** 21 articles and two analyses imported and compared with their Markdown sources
 - **DONE — RLS:** anonymous, owner and temporary non-admin boundaries tested against the remote project
 - **DONE — Local integration:** `.env.local` is ignored, permission-limited and connected to remote Supabase
-- **REMAINING — Cloudflare production Worker and GitHub deployment secrets**
+- **REMAINING — Cloudflare production Pages deployment verification**
 - **REMAINING — Google Cloud Translation and glossary sync**
 - **REMAINING — Production cutover and Pages CMS retirement after comparison**
 
@@ -47,11 +47,11 @@ pnpm content:verify:remote
 
 Remote counts are 21 articles (11 published, 10 draft) and two analyses (one published, one draft). Titles, slugs, dates, areas, bodies, source language and publication states match the source files. `.pages.yml` and Markdown remain preserved until the production cutover is approved.
 
-## 3. Configure Cloudflare Workers
+## 3. Configure Cloudflare Pages
 
-Astro 7's official Cloudflare adapter deploys SSR to **Cloudflare Workers**. The existing Cloudflare Pages site should remain live until this Worker is checked.
+Astro's official Cloudflare adapter supports SSR on **Cloudflare Pages** through Pages Functions. The existing production project is `zexunlai-website`; do not create a Worker or project named after Supabase.
 
-1. Open Cloudflare **Workers & Pages → Create → Worker** and name it `zexunlai-environmental-intelligence`.
+1. Open Cloudflare **Workers & Pages → zexunlai-website → Settings → Variables and Secrets**.
 2. Under **Settings → Variables and Secrets**, add encrypted secrets:
    - `SUPABASE_URL` — Supabase Project URL
    - `SUPABASE_PUBLISHABLE_KEY` — Supabase publishable key
@@ -64,8 +64,8 @@ Astro 7's official Cloudflare adapter deploys SSR to **Cloudflare Workers**. The
    - `SUPABASE_PUBLISHABLE_KEY`
    - `SUPABASE_SERVICE_ROLE_KEY`
    - `PUBLIC_SITE_URL`
-5. Run **Actions → Deploy Cloudflare Worker → Run workflow**. Open the assigned `workers.dev` preview and test the public site and `/login`.
-6. In Cloudflare add the final custom domain to the Worker, then update `PUBLIC_SITE_URL` and Supabase's Site URL. Keep the old Pages deployment until navigation, article slugs, legal pages, images and SEO have been compared.
+5. Run **Actions → Deploy Cloudflare Pages → Run workflow**. The workflow explicitly targets the existing Pages project `zexunlai-website`.
+6. Keep the current Pages deployment until navigation, article slugs, legal pages, images and SEO have been compared.
 
 ## 4. Enable the weekly resource checker
 
