@@ -64,7 +64,7 @@ jobs:
       - name: Verify Wrangler CLI
         run: pnpm exec wrangler --version
       - name: Verify Astro Worker entrypoint
-        run: test -f ./node_modules/@astrojs/cloudflare/dist/entrypoints/server.js
+        run: test -f ./dist/server/entry.mjs
       - name: Verify downloaded build output
         run: |
           pwd
