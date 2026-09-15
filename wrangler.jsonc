@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "zexunlai-website",
-  "main": "@astrojs/cloudflare/entrypoints/server",
+  "main": "./node_modules/@astrojs/cloudflare/dist/entrypoints/server.js",
   "compatibility_date": "2026-09-14",
   "compatibility_flags": ["nodejs_compat"],
   "assets": { "binding": "ASSETS", "directory": "./dist" },
