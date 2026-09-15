@@ -70,28 +70,22 @@ jobs:
           echo '--- downloaded runtime markers ---'
           find dist -type f \( -name '_worker.js' -o -name '_routes.json' -o -name '*manifest*' \) -print | sort
       - name: Upload SUPABASE_URL secret
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: secret put SUPABASE_URL --name zexunlai-website --config wrangler.jsonc
+        run: printf '%s' "$SUPABASE_URL" | pnpm exec wrangler secret put SUPABASE_URL --name zexunlai-website --config wrangler.jsonc
         env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       - name: Upload SUPABASE_PUBLISHABLE_KEY secret
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: secret put SUPABASE_PUBLISHABLE_KEY --name zexunlai-website --config wrangler.jsonc
+        run: printf '%s' "$SUPABASE_PUBLISHABLE_KEY" | pnpm exec wrangler secret put SUPABASE_PUBLISHABLE_KEY --name zexunlai-website --config wrangler.jsonc
         env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
       - name: Upload SUPABASE_SERVICE_ROLE_KEY secret
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: secret put SUPABASE_SERVICE_ROLE_KEY --name zexunlai-website --config wrangler.jsonc
+        run: printf '%s' "$SUPABASE_SERVICE_ROLE_KEY" | pnpm exec wrangler secret put SUPABASE_SERVICE_ROLE_KEY --name zexunlai-website --config wrangler.jsonc
         env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@v3
