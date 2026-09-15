@@ -1,42 +1,51 @@
 # One-time owner setup
 
-These steps are required because account creation and secret entry must be completed by the account owner. They do not require hand-creating tables or editing website code.
+This document records completed owner setup and the remaining external deployment steps. No secret values belong in this file.
 
-## 1. Create and secure Supabase
+## Current status — 15 September 2026
 
-1. Sign in to Supabase and select **New project**.
-2. Choose an organisation, set the project name to `zexunlai-environmental-intelligence`, generate a strong database password and store it in a password manager.
-3. Open **Authentication → Providers → Email**. Turn off **Allow new users to sign up**. Keep email/password sign-in enabled.
-4. Open **Authentication → URL Configuration**. Set the Site URL to the final public website URL and add `http://127.0.0.1:4321` as a redirect URL for local testing.
-5. From this repository, sign in to the Supabase CLI, link the new project, then apply the checked-in migrations and seed:
+- **DONE — Supabase project:** `zexunlai-environmental-intelligence`
+- **DONE — Linked project ref:** `kwurwntwlluypviyjkpb`
+- **DONE — Authentication:** email/password enabled; public signup and anonymous sign-in disabled
+- **DONE — Owner:** `zexunlai@gmail.com` mapped as the sole active `owner`
+- **DONE — Database:** nine migrations applied and 35 required tables verified
+- **DONE — Seed:** five expertise areas, 47 hubs, 186 resources, 157 verified resources, 29 needs-review resources and 11 bilingual glossary concepts
+- **DONE — Content migration:** 21 articles and two analyses imported and compared with their Markdown sources
+- **DONE — RLS:** anonymous, owner and temporary non-admin boundaries tested against the remote project
+- **DONE — Local integration:** `.env.local` is ignored, permission-limited and connected to remote Supabase
+- **REMAINING — Cloudflare production Worker and GitHub deployment secrets**
+- **REMAINING — Google Cloud Translation and glossary sync**
+- **REMAINING — Production cutover and Pages CMS retirement after comparison**
 
-   ```sh
-   npx supabase login
-   npx supabase link --project-ref YOUR_PROJECT_REF
-   npx supabase db push --include-seed
-   ```
+## 1. Supabase connection and security — completed
 
-6. Open **Authentication → Users → Add user → Create new user**. Enter `zexunlai@gmail.com`, a strong password, and mark the email confirmed.
-7. Run `npx supabase db push` once more. The owner bootstrap migration matches that email and creates the sole active `owner` row. If the migration was already marked applied before the user existed, open the Supabase SQL Editor and run only this idempotent statement:
+The repository is linked to the project above. The checked-in migrations were applied through the official Supabase CLI:
 
-   ```sql
-   insert into public.admin_users(user_id,email,role,active)
-   select id,email,'owner',true from auth.users where lower(email)='zexunlai@gmail.com'
-   on conflict(user_id) do update set role='owner',active=true;
-   ```
+```sh
+supabase link --project-ref kwurwntwlluypviyjkpb
+supabase db push --include-seed
+```
 
-8. In **Project Settings → API**, copy the Project URL and publishable key. Keep the service-role key private.
+Remote verification commands are available for future schema changes:
 
-## 2. Import the preserved website content
+```sh
+pnpm db:verify:remote
+pnpm auth:verify:remote
+```
 
-Create a local `.env` file from `.env.example` and fill in `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` and `SUPABASE_SERVICE_ROLE_KEY`. Never commit this file. Run:
+These tests confirm owner CRUD, public signup disabled, anonymous sign-in disabled, non-admin denial, draft isolation, private glossary isolation, official-resource publication rules and contact INSERT-only access. They create temporary rows and remove them before finishing.
+
+## 2. Preserved website content — completed
+
+The production import completed without changing the source Markdown. Verification commands remain available:
 
 ```sh
 pnpm content:import
 pnpm content:import -- --apply
+pnpm content:verify:remote
 ```
 
-The first command previews counts. The second imports and verifies the 21 existing article files and preserved library analyses. Compare existing slugs and drafts in `/admin/articles` before retiring Pages CMS.
+Remote counts are 21 articles (11 published, 10 draft) and two analyses (one published, one draft). Titles, slugs, dates, areas, bodies, source language and publication states match the source files. `.pages.yml` and Markdown remain preserved until the production cutover is approved.
 
 ## 3. Configure Cloudflare Workers
 

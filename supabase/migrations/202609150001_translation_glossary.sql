@@ -132,7 +132,7 @@ alter table public.analysis_translations add constraint analysis_translation_glo
 create index article_translation_status_idx on public.article_translations(locale,translation_status);
 create index analysis_translation_status_idx on public.analysis_translations(locale,translation_status);
 create index glossary_terms_status_idx on public.glossary_terms(status,public_definition_enabled,auto_reference_enabled);
-create index glossary_terms_term_trgm_idx on public.glossary_terms using gin(canonical_english_term gin_trgm_ops);
+create index glossary_terms_term_trgm_idx on public.glossary_terms using gin(canonical_english_term extensions.gin_trgm_ops);
 create index glossary_term_translations_locale_idx on public.glossary_term_translations(locale,display_term);
 create index glossary_variants_lookup_idx on public.glossary_variants(locale,lower(variant));
 create index content_glossary_reference_idx on public.content_glossary_references(content_type,content_id,locale,enabled);

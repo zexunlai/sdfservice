@@ -7,7 +7,7 @@ type RuntimeLocals = App.Locals | undefined;
 
 export function envValue(locals: RuntimeLocals, key: keyof ImportMetaEnv) {
   void locals;
-  return String((cloudflareEnv as Record<string, unknown>)[key] ?? import.meta.env[key] ?? '');
+  return String((cloudflareEnv as Record<string, unknown>)[key] ?? '');
 }
 
 export function isSupabaseConfigured(locals?: RuntimeLocals) {

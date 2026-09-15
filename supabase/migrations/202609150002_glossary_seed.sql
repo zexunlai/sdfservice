@@ -1,3 +1,6 @@
+alter table public.glossary_term_translations
+  add column if not exists translation_credit_public boolean not null default true;
+
 insert into public.glossary_sources(organisation,official_title,official_url,year_or_version) values
 ('UNFCCC','Rules and Regulations','https://unfccc.int/process-and-meetings/bodies/constituted-bodies/article-64-supervisory-body/rules-and-regulations',null),
 ('GHG Protocol','Standards & Guidance','https://ghgprotocol.org/standards-guidance',null),
@@ -25,9 +28,9 @@ on conflict(canonical_english_term) do update set preferred_english_term=exclude
 returning id,canonical_english_term
 )
 insert into public.glossary_term_translations(glossary_term_id,locale,display_term,definition,translation_status,translator_name,translation_credit_public,reviewed_at)
-select i.id,'en',t.en_term,t.en_definition,'original','Ze-Xun Lai',false,now() from inserted i join terms t on t.canonical=i.canonical_english_term
+select i.id,'en',t.en_term,t.en_definition,'original'::public.translation_status,'Ze-Xun Lai',false,now() from inserted i join terms t on t.canonical=i.canonical_english_term
 union all
-select i.id,'zh-TW',t.zh_term,t.zh_definition,'human_translated','Ze-Xun Lai',true,now() from inserted i join terms t on t.canonical=i.canonical_english_term
+select i.id,'zh-TW',t.zh_term,t.zh_definition,'human_translated'::public.translation_status,'Ze-Xun Lai',true,now() from inserted i join terms t on t.canonical=i.canonical_english_term
 on conflict(glossary_term_id,locale) do update set display_term=excluded.display_term,definition=excluded.definition,translation_status=excluded.translation_status,translator_name=excluded.translator_name,reviewed_at=excluded.reviewed_at;
 
 insert into public.glossary_variants(glossary_term_id,locale,variant,variant_kind,case_sensitive)

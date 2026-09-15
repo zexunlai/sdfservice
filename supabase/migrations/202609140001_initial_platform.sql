@@ -1,6 +1,6 @@
 -- Environmental Intelligence Platform — initial production schema
 create extension if not exists pgcrypto;
-create extension if not exists pg_trgm;
+create extension if not exists pg_trgm with schema extensions;
 create schema if not exists private;
 
 create type public.content_status as enum ('draft','published','archived');
@@ -115,7 +115,12 @@ create table public.official_resources (
     setweight(to_tsvector('english',coalesce(short_title,'')),'A') ||
     setweight(to_tsvector('english',coalesce(document_code,'')),'B') ||
     setweight(to_tsvector('english',coalesce(description,'')),'D') ||
-    setweight(to_tsvector('english',coalesce(array_to_string(array[data_theme,data_type,platform_or_sensor,geographic_coverage], ' '),'')),'C')
+    setweight(to_tsvector('english',
+      coalesce(data_theme,'') || ' ' ||
+      coalesce(data_type,'') || ' ' ||
+      coalesce(platform_or_sensor,'') || ' ' ||
+      coalesce(geographic_coverage,'')
+    ),'C')
   ) stored,
   created_by uuid references auth.users(id), updated_by uuid references auth.users(id),
   created_at timestamptz not null default now(), updated_at timestamptz not null default now(),
@@ -200,7 +205,7 @@ create index resources_status_idx on public.official_resources(published,status,
 create index resources_type_idx on public.official_resources(resource_type_id);
 create index resources_health_review_idx on public.official_resources(health,next_review_at);
 create index resources_search_idx on public.official_resources using gin(search_document);
-create index resources_title_trgm_idx on public.official_resources using gin(official_title gin_trgm_ops);
+create index resources_title_trgm_idx on public.official_resources using gin(official_title extensions.gin_trgm_ops);
 create index resource_areas_area_idx on public.resource_areas(area_id,resource_id);
 create index analyses_status_date_idx on public.library_analyses(status,publication_date desc);
 create index checks_resource_date_idx on public.resource_checks(resource_id,checked_at desc);
@@ -244,10 +249,10 @@ create function public.search_official_resources(search_query text, area_key tex
 returns table(id uuid,slug text,official_title text,short_title text,description text,official_url text,format text,year smallint,version_label text,language text,access public.access_level,status public.resource_status,last_verified_at timestamptz,health public.health_status,organisation_name text,organisation_slug text,resource_type text,rank real)
 language sql stable security invoker set search_path='' as $$
   select r.id,r.slug,r.official_title,r.short_title,r.description,r.official_url,r.format,r.year,r.version_label,r.language,r.access,r.status,r.last_verified_at,r.health,o.name,o.slug,rt.name,
-    case when search_query is null or trim(search_query)='' then 0::real else (ts_rank(r.search_document,websearch_to_tsquery('english',search_query))*10 + similarity(r.official_title,search_query)*5 + case when lower(r.official_title)=lower(search_query) then 100 else 0 end)::real end rank
+    case when search_query is null or trim(search_query)='' then 0::real else (ts_rank(r.search_document,websearch_to_tsquery('english',search_query))*10 + extensions.similarity(r.official_title,search_query)*5 + case when lower(r.official_title)=lower(search_query) then 100 else 0 end)::real end rank
   from public.official_resources r join public.organisations o on o.id=r.organisation_id join public.resource_types rt on rt.id=r.resource_type_id
   where r.published and r.status='current'
-    and (search_query is null or trim(search_query)='' or r.search_document @@ websearch_to_tsquery('english',search_query) or r.official_title % search_query or search_query=any(o.aliases))
+    and (search_query is null or trim(search_query)='' or r.search_document @@ websearch_to_tsquery('english',search_query) or r.official_title operator(extensions.%) search_query or search_query=any(o.aliases))
     and (type_slug is null or rt.slug=type_slug)
     and (area_key is null or exists(select 1 from public.resource_areas ra join public.expertise_areas ea on ea.id=ra.area_id where ra.resource_id=r.id and ea.key=area_key))
   order by rank desc,r.official_title limit least(result_limit,100) offset greatest(result_offset,0);
