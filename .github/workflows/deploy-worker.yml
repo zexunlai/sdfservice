@@ -1,4 +1,4 @@
-name: Deploy Cloudflare Pages
+name: Deploy Cloudflare Worker
 
 on:
   push:
@@ -58,6 +58,7 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
+      - run: pnpm install --frozen-lockfile
       - name: Verify downloaded build output
         run: |
           pwd
@@ -72,4 +73,10 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name zexunlai-website --branch main --commit-dirty=true
+          command: deploy --config wrangler.jsonc
+          secrets: |
+            SUPABASE_URL
+            SUPABASE_SERVICE_ROLE_KEY
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
