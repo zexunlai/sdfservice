@@ -47,9 +47,9 @@ pnpm content:verify:remote
 
 Remote counts are 21 articles (11 published, 10 draft) and two analyses (one published, one draft). Titles, slugs, dates, areas, bodies, source language and publication states match the source files. `.pages.yml` and Markdown remain preserved until the production cutover is approved.
 
-## 3. Configure Cloudflare Pages
+## 3. Configure Cloudflare Worker
 
-Astro's official Cloudflare adapter supports SSR on **Cloudflare Pages** through Pages Functions. The existing production project is `zexunlai-website`; do not create a Worker or project named after Supabase.
+Astro's official Cloudflare adapter uses the SSR Worker `zexunlai-website` at `https://zexunlai-website.zotex0426.workers.dev`. Do not create a Worker or project named after Supabase.
 
 1. Open Cloudflare **Workers & Pages → zexunlai-website → Settings → Variables and Secrets**.
 2. Under **Settings → Variables and Secrets**, add encrypted secrets:

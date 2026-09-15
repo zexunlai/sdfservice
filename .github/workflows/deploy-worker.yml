@@ -69,16 +69,33 @@ jobs:
           find dist -maxdepth 3 -type f | sort
           echo '--- downloaded runtime markers ---'
           find dist -type f \( -name '_worker.js' -o -name '_routes.json' -o -name '*manifest*' \) -print | sort
-      - uses: cloudflare/wrangler-action@v3
+      - name: Upload SUPABASE_URL secret
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: secret put SUPABASE_URL --name zexunlai-website --config wrangler.jsonc
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      - name: Upload SUPABASE_PUBLISHABLE_KEY secret
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: secret put SUPABASE_PUBLISHABLE_KEY --name zexunlai-website --config wrangler.jsonc
+        env:
+          SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+      - name: Upload SUPABASE_SERVICE_ROLE_KEY secret
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: secret put SUPABASE_SERVICE_ROLE_KEY --name zexunlai-website --config wrangler.jsonc
+        env:
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      - name: Deploy Worker
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy --config wrangler.jsonc --name zexunlai-website
-          secrets: |
-            SUPABASE_URL
-            SUPABASE_PUBLISHABLE_KEY
-            SUPABASE_SERVICE_ROLE_KEY
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
