@@ -1,0 +1,10 @@
+---
+import BaseLayout from './BaseLayout.astro';
+const {title,description,publicationDate,updatedDate,area,subtopic,tags=[],author='Ze-Xun Lai',requestedLocale='en',contentLocale='en',sourceLanguage='en',translationStatus,translationProvider,translatorName,translationCreditPublic=true,attributionRequired=false}=Astro.props;
+const dateFormat=new Intl.DateTimeFormat('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+const canonical=new URL(Astro.url.pathname,Astro.site).toString();
+const base=`${import.meta.env.BASE_URL}/`;
+const schema={'@context':'https://schema.org','@graph':[{'@type':'Article',headline:title,description,author:{'@type':'Person',name:author},datePublished:publicationDate.toISOString(),dateModified:updatedDate?.toISOString(),mainEntityOfPage:canonical},{'@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Home',item:new URL('/',Astro.site).toString()},{'@type':'ListItem',position:2,name:'Insights',item:new URL('/insights/',Astro.site).toString()},{'@type':'ListItem',position:3,name:title,item:canonical}]}]};
+---
+<BaseLayout title={title} description={description} type="article" schema={schema}><article><header class="page-intro reading"><div class="eyebrow">{area}{subtopic&&` · ${subtopic}`}</div><h1>{title}</h1><p>{description}</p><div class="meta"><span>{author}</span><time datetime={publicationDate.toISOString()}>{dateFormat.format(publicationDate)}</time>{updatedDate&&<span>Updated <time datetime={updatedDate.toISOString()}>{dateFormat.format(updatedDate)}</time></span>}</div></header><div class="reading prose"><slot/></div></article><div class="reading tags">{tags.map((tag:string)=><span class="tag">{tag}</span>)}</div><div class="reading back"><a class="text-link" href={`${base}insights/`}>← All insights</a></div></BaseLayout>
+<style>article{padding-bottom:70px}.page-intro h1{max-width:13ch;font-size:clamp(3rem,7vw,6rem)}.page-intro .meta{margin-top:32px}.tags{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:40px}.back{padding:20px 0 100px;border-top:1px solid var(--line)}</style>

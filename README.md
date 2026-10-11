@@ -1,26 +1,30 @@
-# Ze-Xun Lai — static website
+# Ze-Xun Lai — Environmental Intelligence
 
-This website is published with GitHub Pages. It has no Cloudflare Worker, Supabase database, login, or server-side API.
+This public website is published with GitHub Pages at `https://zexunlai.github.io/sdfservice/`.
 
-## Publish an article or PDF
+It is a static site: it has no Cloudflare Worker, Supabase database, login, contact-form endpoint, or server-side API. Public pages, insights and library entries are built from the files in this repository.
 
-Put your files in the `articles/` folder, then commit and push with GitHub Desktop.
+## Publish an HTML article or PDF
 
-Use the same filename for an online article and its PDF. Start filenames with the publication date so the newest work appears first.
+Put your files in `articles/`, then commit and push with GitHub Desktop. The deployment workflow creates the Publications index automatically.
+
+Use the same filename for an online article and its PDF. Starting filenames with a publication date keeps the newest work first.
 
 ```text
 articles/2026-10-11-nature-risk.html
 articles/2026-10-11-nature-risk.pdf
 ```
 
-- Add only the HTML file: readers see **Read article**.
-- Add only the PDF: readers see **Open PDF** in their browser.
-- Add both: readers can choose either format.
+- HTML only: readers see **Read HTML**.
+- PDF only: readers see **Open PDF** in the browser.
+- Both: readers can choose either format.
 
-GitHub Actions rebuilds the homepage and archive automatically after every push to `main`.
+## Existing editorial content
 
-The `content/legacy-articles/` folder contains the published Markdown articles migrated from the previous site. It is rebuilt into ordinary HTML pages automatically; you do not need to edit it for new work.
+- `src/content/insights/`: public insight articles.
+- `src/content/library/`: methods and resource-library entries.
+- `src/content/research/` and `src/content/projects/`: retained source collections for future expansion.
 
-## Local preview
+## Local build
 
-Run `node scripts/build-static.mjs`. The finished website is written to `dist/`.
+With pnpm installed, run `pnpm run build`. The finished static site is written to `dist/`.

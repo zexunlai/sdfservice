@@ -9,3 +9,5 @@ dist/
 .wrangler/
 supabase/.temp/
 migration-backup/
+public/articles/
+src/data/publications.json
