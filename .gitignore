@@ -8,6 +8,5 @@ dist/
 !.env.example
 .wrangler/
 supabase/.temp/
-migration-backup/
-public/articles/
-src/data/publications.json
+public/insights/
+src/data/pdf-insights.json

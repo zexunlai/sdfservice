@@ -2,24 +2,6 @@ import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 
-const editorial = z.object({
-  title: z.string(),
-  description: z.string(),
-  publicationDate: z.coerce.date(),
-  updatedDate: z.coerce.date().optional(),
-  area: z.enum(['Sustainability & Climate Change','Geospatial Intelligence','Biodiversity & Nature','Circular Economy','Carbon Markets & Methodologies']),
-  subtopic: z.string().optional(),
-  tags: z.array(z.string()).default([]),
-  featured: z.boolean().default(false),
-  draft: z.boolean().default(false),
-  author: z.string().default('Ze-Xun Lai'),
-  image: z.string().optional()
-});
-
-const insights = defineCollection({ loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/insights' }), schema: editorial });
-const supporting = z.object({ title:z.string(), description:z.string(), date:z.coerce.date().optional(), updated:z.coerce.date().optional(), category:z.string(), tags:z.array(z.string()).default([]), featured:z.boolean().default(false), draft:z.boolean().default(false), author:z.string().default('Ze-Xun Lai'), image:z.string().optional() });
-const research = defineCollection({ loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/research' }), schema: supporting });
-const projects = defineCollection({ loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }), schema: supporting.extend({ status:z.string().default('Ongoing') }) });
 const library = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/library' }),
   schema: z.object({
@@ -30,4 +12,4 @@ const library = defineCollection({
   })
 });
 
-export const collections = { insights, library, research, projects };
+export const collections = { library };

@@ -1,30 +1,44 @@
-# Ze-Xun Lai — Environmental Intelligence
+# SDFService static website
 
-This public website is published with GitHub Pages at `https://zexunlai.github.io/sdfservice/`.
+This is the only development workspace for the SDFService public website. The GitHub Pages repository is a deployment destination, not a place to develop.
 
-It is a static site: it has no Cloudflare Worker, Supabase database, login, contact-form endpoint, or server-side API. Public pages, insights and library entries are built from the files in this repository.
+The published site is fully static. It does not require Cloudflare, Supabase, a login, or a database.
 
-## Publish an HTML article or PDF
+## Publish a PDF insight
 
-Put your files in `articles/`, then commit and push with GitHub Desktop. The deployment workflow creates the Publications index automatically.
-
-Use the same filename for an online article and its PDF. Starting filenames with a publication date keeps the newest work first.
+Put a PDF in exactly one of these folders:
 
 ```text
-articles/2026-10-11-nature-risk.html
-articles/2026-10-11-nature-risk.pdf
+insights/
+  sustainability-climate-change/
+  geospatial-intelligence/
+  biodiversity-nature/
+  circular-economy/
+  carbon-markets-methodologies/
 ```
 
-- HTML only: readers see **Read HTML**.
-- PDF only: readers see **Open PDF** in the browser.
-- Both: readers can choose either format.
+Use a filename such as `2026-10-11-urban-heat-risk.pdf`. The date and title are read from the filename; the parent folder supplies one of the five insight tags. The Insights page provides keyword search and filtering by those five tags automatically.
 
-## Existing editorial content
+## Library
 
-- `src/content/insights/`: public insight articles.
-- `src/content/library/`: methods and resource-library entries.
-- `src/content/research/` and `src/content/projects/`: retained source collections for future expansion.
+The Library deliberately contains two separate layers:
 
-## Local build
+- `src/content/library/`: your original methodology analyses, written in Markdown.
+- `src/data/external-resources.json`: verified links to external official resources.
 
-With pnpm installed, run `pnpm run build`. The finished static site is written to `dist/`.
+Visitors can search the Library, select either layer, and narrow external sources by format and access.
+
+## Check a release locally
+
+```bash
+pnpm install
+pnpm run build
+```
+
+The build first copies `insights/` into the generated public site and constructs its PDF index. Generated files in `public/insights/` and `src/data/pdf-insights.json` are intentionally not versioned.
+
+## Deploy to GitHub Pages
+
+When a release is ready, copy only the current site source from this workspace into `/Users/zotexlai/Documents/GitHub/zexunlai-website`, excluding `歷史資料/`, `node_modules/`, `dist/`, `.env*`, and generated files. Then commit and push from GitHub Desktop. GitHub Pages serves the `dist/` build through its existing workflow.
+
+Historical backend material is retained under `歷史資料/` and must never be deployed.
